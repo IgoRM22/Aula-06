@@ -6,6 +6,7 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from datetime import datetime
 from flask_moment import Moment
+from wtforms import StringField, PasswordField, SubmitField
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -32,7 +33,7 @@ def internal_server_error(e):
     return render_template('500.html'), 500
 
 @app.route('/login', methods=['GET', 'POST'])
-def internal_server_error(e):
+def login():
     return render_template('login.html', name=session.get('name'),current_time=datetime.utcnow())
 
 @app.route('/', methods=['GET', 'POST'])
