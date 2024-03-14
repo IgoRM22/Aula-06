@@ -31,6 +31,9 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
+@app.route('/login', methods=['GET', 'POST'])
+def internal_server_error(e):
+    return render_template('login.html', name=session.get('name'),current_time=datetime.utcnow())
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
