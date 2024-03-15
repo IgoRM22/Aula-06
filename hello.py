@@ -6,7 +6,6 @@ from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired
 from datetime import datetime
 from flask_moment import Moment
-from wtforms import StringField, PasswordField, SubmitField
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -16,6 +15,13 @@ moment = Moment(app)
 
 
 class NameForm(FlaskForm):
+    name = StringField('Informe o seu nome', validators=[DataRequired()])
+    surname = StringField('Informe o seu sobrenome:', validators=[DataRequired()])
+    institution = StringField('Informe a sua Insituição de ensino:', validators=[DataRequired()])
+    discipline = SelectField(u'Informe a sua disciplina:', choices=[('dswa5', 'DSWA5'), ('dwba4', 'DWBA4'), ('GPSA5', 'Gestão de projetos')])
+    submit = SubmitField('Submit')
+
+class (FlaskForm):
     name = StringField('Informe o seu nome', validators=[DataRequired()])
     surname = StringField('Informe o seu sobrenome:', validators=[DataRequired()])
     institution = StringField('Informe a sua Insituição de ensino:', validators=[DataRequired()])
