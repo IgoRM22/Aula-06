@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, redirect, url_for, flash, req
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, PasswordField
 from wtforms.validators import DataRequired
 from datetime import datetime
 from flask_moment import Moment
@@ -13,7 +13,7 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-#o teste foi
+
 class NameForm(FlaskForm):
     name = StringField('Informe o seu nome', validators=[DataRequired()])
     surname = StringField('Informe o seu sobrenome:', validators=[DataRequired()])
@@ -21,13 +21,10 @@ class NameForm(FlaskForm):
     discipline = SelectField(u'Informe a sua disciplina:', choices=[('dswa5', 'DSWA5'), ('dwba4', 'DWBA4'), ('GPSA5', 'Gestão de projetos')])
     submit = SubmitField('Submit')
 
-class (FlaskForm):
-    name = StringField('Informe o seu nome', validators=[DataRequired()])
-    surname = StringField('Informe o seu sobrenome:', validators=[DataRequired()])
-    institution = StringField('Informe a sua Insituição de ensino:', validators=[DataRequired()])
-    discipline = SelectField(u'Informe a sua disciplina:', choices=[('dswa5', 'DSWA5'), ('dwba4', 'DWBA4'), ('GPSA5', 'Gestão de projetos')])
-    submit = SubmitField('Submit')
-
+class LoginForm(FlaskForm):
+    email = StringField('Informe o seu nome ou e-mail', validators=[DataRequired()])
+    password = PasswordField('Informe a senha', validators=[DataRequired()])
+    submit = SubmitField('Enviar')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -38,9 +35,6 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    return render_template('login.html', name=session.get('name'),current_time=datetime.utcnow())
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -67,3 +61,15 @@ def index():
                            remote_addr=session.get('remote_addr'),
                            remote_host=session.get('host'),
                            current_time=datetime.utcnow())
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        session['email'] = form.email.data
+        return redirect(url_for('loginResponse'))
+    return render_template('login.html', form=form, current_time=datetime.utcnow())
+
+@app.route('/loginResponse', methods=['GET', 'POST'])
+def loginResponse():
+    return render_template('loginResponse.html', email=session.get['email'], current_time=datetime.utcnow())

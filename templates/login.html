@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
+{% block head %}
+{{ super() }}
+<link href="/static/login.css" rel="stylesheet">
+{% endblock %}
+
 {% block title %}Flasky{% endblock %}
 
 {% block page_content %}
 <div class="container">
-
-    <div class="container">
-    
-        <form action="/login" method="post" class="form-signin">
-          <h2 class="form-signin-heading">Login:</h2>
-          <input class="input-block-level" id="username" name="username" placeholder="Usuário ou e-mail" required="" type="text" value="">
-          <input class="input-block-level" id="password" name="password" placeholder="Informe a sua senha" required="" type="password" value="">
-          <input class="btn btn-large btn-primary" id="submit" name="submit" type="submit" value="Enviar">
-        </form>
-    </div>
-    <br>
-    <p>The local date and time is <span class="" data-timestamp="2024-03-14T23:17:02Z" data-function="format" data-format="LLL" data-refresh="0" style="">March 14, 2024 8:17 PM</span>.</p>
-    <p>That was <span class="" data-timestamp="2024-03-14T23:17:02Z" data-function="fromNow" data-refresh="60000" style="">26 minutes ago</span>.</p>
-    
-    
-    </div>
+    <form class="form-signin" action="/login" method="POST">
+        {{ form.hidden_tag() }}
+        <h2 class="form-signin-heading">Login:</h1>
+        {{ form.email(class="input-block-level", placeholder="Nome ou e-mail") }}
+        {{ form.password(class="input-block-level", placeholder="Senha") }}
+        {{ form.submit(class="btn btn-large btn-primary") }}
+    </form>
+</div>
+<br>
+<p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+<p>That was {{ moment(current_time).fromNow(refresh=True) }}.</p>
 {% endblock %}
