@@ -13,7 +13,6 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-
 class NameForm(FlaskForm):
     name = StringField('Informe o seu nome', validators=[DataRequired()])
     surname = StringField('Informe o seu sobrenome:', validators=[DataRequired()])
@@ -70,6 +69,7 @@ def login():
         return redirect(url_for('response'))
     return render_template('login.html', form=form, current_time=datetime.utcnow())
 
-@app.route('/response', methods=['GET', 'POST'])
-def loginResponse():
-    return render_template('response.html', email=session.get('email'), current_time=datetime.utcnow())
+@app.route('/response')
+def response():
+    email = session.get('email')
+    return render_template('response.html', email=email, current_time=datetime.utcnow())
