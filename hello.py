@@ -67,9 +67,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         session['email'] = form.email.data
-        return redirect(url_for('loginResponse'))
+        return redirect(url_for('response'))
     return render_template('login.html', form=form, current_time=datetime.utcnow())
 
-@app.route('/loginResponse', methods=['GET', 'POST'])
+@app.route('/response', methods=['GET', 'POST'])
 def loginResponse():
-    return render_template('loginResponse.html', email=session.get['email'], current_time=datetime.utcnow())
+    return render_template('response.html', email=session.get['email'], current_time=datetime.utcnow())
