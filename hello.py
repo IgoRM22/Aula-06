@@ -13,7 +13,6 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-
 class NameForm(FlaskForm):
     name = StringField('Informe o seu nome', validators=[DataRequired()])
     surname = StringField('Informe o seu sobrenome:', validators=[DataRequired()])
